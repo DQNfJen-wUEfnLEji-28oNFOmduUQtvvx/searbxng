@@ -1,17 +1,17 @@
 # use prebuild alpine image with needed python packages from base branch
-FROM vojkovic/searxng:base
-ENV GID=991 UID=991 IMAGE_PROXY=true REDIS_URL= LIMITER= BASE_URL= NAME= CONTACT=mailto:brockv@tuta.io ISSUE_URL=https://github.com/vojkovic/searxng/issues GIT_URL=https://github.com/vojkovic/searxng GIT_BRANCH=main PROXY1= PROXY2= PROXY3= \
+FROM DQNfJen-wUEfnLEji-28oNFOmduUQtvvx/searbxng:base
+ENV GID=991 UID=991 IMAGE_PROXY=true REDIS_URL= LIMITER= BASE_URL= NAME= CONTACT=mailto:theo@theo.monster ISSUE_URL=https:// GIT_URL=https://github.com/DQNfJen-wUEfnLEji-28oNFOmduUQtvvx/searbxng GIT_BRANCH=main PROXY1= PROXY2= PROXY3= \
 UPSTREAM_COMMIT=59ef9b9287f1beda12f7b9a20b93cbc378a22bac
-WORKDIR /usr/local/searxng
+WORKDIR /usr/local/searbxng
 
 # install build deps and git clone searxng as well as setting the version
 RUN addgroup -g ${GID} searxng \
-&& adduser -u ${UID} -D -h /usr/local/searxng -s /bin/sh -G searxng searxng \
-&& git config --global --add safe.directory /usr/local/searxng \
+&& adduser -u ${UID} -D -h /usr/local/searbxng -s /bin/sh -G searbxng searbxng \
+&& git config --global --add safe.directory /usr/local/searbxng \
 && git clone https://github.com/searxng/searxng.git . \
 && git reset --hard ${UPSTREAM_COMMIT} \
-&& chown -R searxng:searxng . \
-&& su searxng -c "/usr/bin/python3 -m searx.version freeze"
+&& chown -R searbxng:searbxng . \
+&& su searbxng -c "/usr/bin/python3 -m searx.version freeze"
 
 # copy custom simple themes, run.sh, limiter2 and filtron
 COPY ./src/css/* searx/static/themes/simple/css/
@@ -36,7 +36,7 @@ sed -i -e "/safe_search:/s/0/1/g" \
 -e "/static_use_hash:/s/false/true/g" \
 -e "s/    use_mobile_ui: false/    use_mobile_ui: true/g" \
 -e "/disabled: false/d" \
--e "/name: google/s/$/\n    disabled: false/g" \
+-e "/name: google/s/$/\n    disabled: true/g" \
 -e "/name: wikipedia/s/$/\n    disabled: false/g" \
 -e "/name: wikidata/s/$/\n    disabled: true/g" \
 -e "/name: duckduckgo/s/$/\n    disabled: true/g" \
@@ -61,11 +61,11 @@ sed -i -e "/safe_search:/s/0/1/g" \
 -e "/name: tineye/s/$/\n    disabled: true/g" \
 -e "/shortcut: fd/{n;s/.*/    disabled: false/}" \
 searx/settings.yml; \
-su searxng -c "/usr/bin/python3 -m compileall -q searx"; \
-find /usr/local/searxng/searx/static -a \( -name '*.html' -o -name '*.css' -o -name '*.js' -o -name '*.svg' -o -name '*.ttf' -o -name '*.eot' \) \
+su searbxng -c "/usr/bin/python3 -m compileall -q searx"; \
+find /usr/local/searbxng/searx/static -a \( -name '*.html' -o -name '*.css' -o -name '*.js' -o -name '*.svg' -o -name '*.ttf' -o -name '*.eot' \) \
 -type f -exec gzip -9 -k {} \+ -exec brotli --best {} \+
 
-# expose port and set tini as CMD; default user is searxng
-USER searxng
-EXPOSE 8080
+# expose port and set tini as CMD; default user is searbxng
+USER searbxng
+EXPOSE 8037
 CMD ["/sbin/tini","--","run.sh"]
