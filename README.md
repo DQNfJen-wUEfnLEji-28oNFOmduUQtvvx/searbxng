@@ -8,7 +8,7 @@ Production Server / Instance : https://localhost:8037
 
 ### Basic Usage
 
-* ```docker run -it --rm -p 8080:8080 vojkovic/searxng:production```
+* ```docker run -it --rm -p 8037:8037 DQNfJen-wUEfnLEji-28oNFOmduUQtvvx/searbxng:production```
 
 * After that just visit http://127.0.0.1:8037 in your browser and stop the server with ctrl-c.
 
