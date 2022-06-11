@@ -4,33 +4,23 @@ A Fork of https://github.com/paulgoio/searxng
 
 Builds custom SearXNG container with a changed simple theme, settings.yml and bundled with filtron binary; This project builds on top of https://github.com/searxng/searxng (SearXNG vs SearX: https://github.com/searxng/searxng/issues/46) as well as https://github.com/dalf/filtron.)
 
-Production Server / Instance : https://search.vojkovic.xyz/
-
-## FAQ
-
-### Are you logging requests?
-
-As off May 11th, I am no longer logging any requests.
-
-### Why does Quant not work?
-
-This SearXNG instance is hosted on a VPS in Singapore. In December 2020, Qwant closed access for multiple countries, one being Singapore. You can read their statement on the matter [here](https://twitter.com/QwantCom/status/1339149434572206080). Therefore, I have deactivated Qwant as a default search engine until Qwant allows Singaporean users to access their service.
+Production Server / Instance : https://localhost:8037
 
 ### Basic Usage
 
 * ```docker run -it --rm -p 8080:8080 vojkovic/searxng:production```
 
-* After that just visit http://127.0.0.1:8080 in your browser and stop the server with ctrl-c.
+* After that just visit http://127.0.0.1:8037 in your browser and stop the server with ctrl-c.
 
 ### Development
 
-* Clone this repo: ```git clone https://github.com/vojkovic/searxng.git```
+* Clone this repo: ```git clone https://github.com/DQNfJen-wUEfnLEji-28oNFOmduUQtvvx/searbxng.git```
 
 * After making your changes in `src/less` make sure to update `src/css` by running `update.sh` (python, npm and make needed)
 
-* You can build the docker container locally by running (check out base branch for the alpine base with the needed python packages): ```docker build --pull -f ./Dockerfile -t searxng-dev:latest .```
+* You can build the docker container locally by running (check out base branch for the alpine base with the needed python packages): ```docker build --pull -f ./Dockerfile -t searbxng-dev:latest .```
 
-* Debug the local container with: ```docker run -it --rm -p 8080:8080 searxng-dev:latest```
+* Debug the local container with: ```docker run -it --rm -p 8080:8080 searbxng-dev:latest```
 
 
 
